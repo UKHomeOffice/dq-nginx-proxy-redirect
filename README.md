@@ -1,9 +1,8 @@
-# OpenResty Docker Container
+# DQ OpenResty Docker Container
 
-[![Build Status](https://travis-ci.org/UKHomeOffice/docker-nginx-proxy.svg?branch=master)](https://travis-ci.org/UKHomeOffice/docker-nginx-proxy)
+This repository is based on the [UKHomeOffice/docker-nginx-proxy](https://github.com/UKHomeOffice/docker-nginx-proxy) repo, but includes the extra feature of `PROXY_REDIRECT` which is used in [UKHomeOffice/dq-carrier-portal](https://github.com/UKHomeOffice/dq-carrier-portal).
 
-This container aims to be a generic proxy layer for your web services. It includes OpenResty with
-Lua and NAXSI filtering compiled in.
+This container aims to be a generic proxy layer for your web services. It includes OpenResty with Lua and NAXSI filtering compiled in.
 
 ## Getting Started
 
