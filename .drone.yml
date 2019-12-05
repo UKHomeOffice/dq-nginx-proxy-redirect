@@ -15,6 +15,10 @@ pipeline:
     repo: quay.io/ukhomeofficedigital/dq-nginx-proxy-redirect
     secrets: [ docker_username, docker_password ]
     registry: quay.io
+    force_tag: true
+    tags:
+      - ${DRONE_COMMIT_SHA}
+      - b${DRONE_BUILD_NUMBER}
     when:
       event: push
       branch: master
