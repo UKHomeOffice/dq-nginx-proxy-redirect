@@ -1,7 +1,7 @@
 FROM quay.io/ukhomeofficedigital/centos-base:latest
 MAINTAINER Lewis Marshall <lewis@technoplusit.co.uk>
 
-ENV GEOIP_LICENSE_KEY ${GEOIP_LICENSE_KEY}
+ARG GEOIP_LICENSE_KEY
 
 WORKDIR /root
 ADD ./build.sh /root/
