@@ -7,6 +7,9 @@ pipeline:
       - yum update -y
       - yum install -y -q docker openssl wget
       - ./ci-build.sh
+      - export GEOIP_LICENSE_KEY=$$GEOIP_LICENSE_KEY
+    secrets:
+      - GEOIP_LICENSE_KEY
     when:
       event: push
 
