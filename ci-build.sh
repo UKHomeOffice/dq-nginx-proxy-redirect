@@ -142,7 +142,7 @@ start_test "Test GEODB settings can reject..." "${STD_CMD} \
            -e \"PROXY_SERVICE_PORT=${MOCKSERVER_PORT}\" \
            -e \"DNSMASK=TRUE\" \
            -e \"ENABLE_UUID_PARAM=FALSE\" \
-           -e \"ALLOW_COUNTRY_CSV=GB\" \
+           -e \"ALLOW_COUNTRY_CSV=CG\" \
            -e \"DENY_COUNTRY_ON=TRUE\" \
            -e \"ADD_NGINX_LOCATION_CFG=error_page 403 /nginx-proxy/50x.shtml;\" \
            --link \"${MOCKSERVER}:${MOCKSERVER}\" "
