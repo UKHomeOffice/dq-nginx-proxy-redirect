@@ -4,10 +4,10 @@ pipeline:
     environment:
       - DOCKER_HOST=tcp://172.17.0.1:2375
     commands:
-      - export GEOIP_LICENSE_KEY=$$GEOIP_LICENSE_KEY
       - yum update -y
       - yum install -y -q docker openssl wget
       - ./ci-build.sh
+      - export GEOIP_LICENSE_KEY=$$GEOIP_LICENSE_KEY
     secrets:
       - GEOIP_LICENSE_KEY
     when:
