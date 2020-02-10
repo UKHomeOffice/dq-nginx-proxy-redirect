@@ -16,6 +16,8 @@ pipeline:
   push_image_to_quay:
     image: ukhomeoffice/drone-docker
     repo: quay.io/ukhomeofficedigital/dq-nginx-proxy-redirect
+    commands:
+      - export GEOIP_LICENSE_KEY=$$GEOIP_LICENSE_KEY
     secrets:
       - docker_username
       - docker_password
