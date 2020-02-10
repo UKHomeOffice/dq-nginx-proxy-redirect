@@ -4,8 +4,8 @@
 set -eu
 set -o pipefail
 
-GEOIP_CITY_URL='https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key='"${GEOIP_LICENSE_KEY}"'&suffix=tar.gz'
-GEOIP_COUNTRY_URL='https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&license_key='"${GEOIP_LICENSE_KEY}"'&suffix=tar.gz'
+GEOIP_CITY_URL='http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz'
+GEOIP_COUNTRY_URL='http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.mmdb.gz'
 GEOIP_MOD_URL='https://github.com/leev/ngx_http_geoip2_module/archive/3.0.tar.gz'
 GEOIP_UPDATE_CLI='https://github.com/maxmind/geoipupdate/releases/download/v3.1.1/geoipupdate-3.1.1.tar.gz'
 GEOIP_URL='https://github.com/maxmind/libmaxminddb/releases/download/1.3.2/libmaxminddb-1.3.2.tar.gz'
@@ -31,8 +31,7 @@ yum -y install \
     readline-devel \
     tar \
     unzip \
-    wget \
-    nginx-plus-module-geoip2
+    wget
 
 mkdir -p openresty luarocks naxsi nginx-statsd geoip geoipupdate ngx_http_geoip2_module
 
