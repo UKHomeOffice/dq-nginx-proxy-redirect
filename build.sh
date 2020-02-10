@@ -31,8 +31,7 @@ yum -y install \
     readline-devel \
     tar \
     unzip \
-    wget \
-    nginx-plus-module-geoip2
+    wget
 
 mkdir -p openresty luarocks naxsi nginx-statsd geoip geoipupdate ngx_http_geoip2_module
 
