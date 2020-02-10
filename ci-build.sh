@@ -87,7 +87,7 @@ echo "========"
 echo "BUILD..."
 echo "========"
 echo "travis_fold:start:BUILD"
-docker build --build-arg GEOIP_LICENSE_KEY=${GEOIP_LICENSE_KEY} -t ${TAG} .
+docker build -t ${TAG} .
 echo "travis_fold:end:BUILD"
 
 echo "Running mocking-server..."
