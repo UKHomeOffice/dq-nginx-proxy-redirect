@@ -1,4 +1,18 @@
 pipeline:
+  get_geoip_databases:
+    image: docker
+    environment:
+      - DOCKER_HOST=tcp://172.17.0.1:2375
+    secrets:
+      - GEOIP_LICENSE_KEY
+    commands:
+      - export GEOIP_CITY_URL=https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key='"${GEOIP_LICENSE_KEY}"'&suffix=tar.gz'
+      - export GEOIP_COUNTRY_URL='https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&license_key='"${GEOIP_LICENSE_KEY}"'&suffix=tar.gz'
+      - curl -fSL ${GEOIP_COUNTRY_URL} | gzip -d > GeoLite2-Country.mmdb
+      - curl -fSL ${GEOIP_CITY_URL} | gzip -d > GeoLite2-City.mmdb
+    when:
+      event: push
+
   build_and_test_image:
     image: quay.io/ukhomeofficedigital/centos-base:latest
     environment:
@@ -6,6 +20,8 @@ pipeline:
     commands:
       - yum update -y
       - yum install -y -q docker openssl wget
+      - mkdir -p /usr/share/GeoIP
+      - cp GeoLite2*.mmdb /usr/share/GeoIP
       - ./ci-build.sh
     when:
       event: push
