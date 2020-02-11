@@ -4,7 +4,7 @@ MAINTAINER Lewis Marshall <lewis@technoplusit.co.uk>
 WORKDIR /root
 
 RUN mkdir -p /usr/share/GeoIP
-RUN cp ./GeoIP/GeoLite2*.mmdb /usr/share/GeoIP/
+RUN cp GeoLite2*.mmdb /usr/share/GeoIP/
 
 ADD ./build.sh /root/
 RUN ./build.sh
