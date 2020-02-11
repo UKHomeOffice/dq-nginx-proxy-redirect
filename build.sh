@@ -4,8 +4,6 @@
 set -eu
 set -o pipefail
 
-GEOIP_CITY_URL='http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz'
-GEOIP_COUNTRY_URL='http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.mmdb.gz'
 GEOIP_MOD_URL='https://github.com/leev/ngx_http_geoip2_module/archive/3.0.tar.gz'
 GEOIP_UPDATE_CLI='https://github.com/maxmind/geoipupdate/releases/download/v3.1.1/geoipupdate-3.1.1.tar.gz'
 GEOIP_URL='https://github.com/maxmind/libmaxminddb/releases/download/1.3.2/libmaxminddb-1.3.2.tar.gz'
@@ -50,8 +48,6 @@ mkdir -p ${MAXMIND_PATH}
 ./configure
 make check install
 echo "/usr/local/lib" >> /etc/ld.so.conf.d/libmaxminddb.conf
-curl -fSL ${GEOIP_COUNTRY_URL} | gzip -d > ${MAXMIND_PATH}/GeoLite2-Country.mmdb
-curl -fSL ${GEOIP_CITY_URL} | gzip -d > ${MAXMIND_PATH}/GeoLite2-City.mmdb
 chown -R 1000:1000 ${MAXMIND_PATH}
 popd
 
