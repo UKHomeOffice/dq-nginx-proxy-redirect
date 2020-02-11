@@ -2,6 +2,10 @@ FROM quay.io/ukhomeofficedigital/centos-base:latest
 MAINTAINER Lewis Marshall <lewis@technoplusit.co.uk>
 
 WORKDIR /root
+
+RUN mkdir -p /usr/share/GeoIP
+RUN cp ./GeoLite2*.mmdb /usr/share/GeoIP
+
 ADD ./build.sh /root/
 RUN ./build.sh
 

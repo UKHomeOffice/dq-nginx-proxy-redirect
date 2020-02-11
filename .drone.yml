@@ -20,8 +20,6 @@ pipeline:
     commands:
       - yum update -y
       - yum install -y -q docker openssl wget
-      - mkdir -p /usr/share/GeoIP
-      - cp GeoLite2*.mmdb /usr/share/GeoIP
       - ./ci-build.sh
     when:
       event: push
