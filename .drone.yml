@@ -6,8 +6,8 @@ pipeline:
     secrets:
       - GEOIP_LICENSE_KEY
     commands:
-      - export GEOIP_CITY_URL=https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key='"${GEOIP_LICENSE_KEY}"'&suffix=tar.gz'
-      - export GEOIP_COUNTRY_URL='https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&license_key='"${GEOIP_LICENSE_KEY}"'&suffix=tar.gz'
+      - export GEOIP_CITY_URL='https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=$${GEOIP_LICENSE_KEY}&suffix=tar.gz'
+      - export GEOIP_COUNTRY_URL='https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&license_key=$${GEOIP_LICENSE_KEY}&suffix=tar.gz'
       - curl -fSL ${GEOIP_COUNTRY_URL} | gzip -d > GeoLite2-Country.mmdb
       - curl -fSL ${GEOIP_CITY_URL} | gzip -d > GeoLite2-City.mmdb
     when:
