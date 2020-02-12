@@ -4,8 +4,8 @@ MAINTAINER Lewis Marshall <lewis@technoplusit.co.uk>
 WORKDIR /root
 
 RUN mkdir -p /usr/share/GeoIP
-RUN cp ./GeoLite2-City.mmdb /usr/share/GeoIP/ && \
-    cp ./GeoLite2-Country.mmdb /usr/share/GeoIP/
+ADD ./GeoLite2-City.mmdb /usr/share/GeoIP/
+ADD ./GeoLite2-Country.mmdb /usr/share/GeoIP/
 
 ADD ./build.sh /root/
 RUN ./build.sh
