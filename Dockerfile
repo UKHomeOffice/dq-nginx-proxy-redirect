@@ -1,5 +1,4 @@
 FROM quay.io/ukhomeofficedigital/centos-base:latest
-MAINTAINER Lewis Marshall <lewis@technoplusit.co.uk>
 
 WORKDIR /root
 
@@ -45,6 +44,8 @@ RUN useradd -u 1000 nginx && \
       /usr/local/openresty/naxsi/locations \
       /usr/local/openresty/nginx/{client_body,fastcgi,proxy,scgi,uwsgi}_temp && \
     chown -R nginx:nginx /usr/local/openresty/nginx/{conf,logs} /usr/share/GeoIP
+
+RUN echo $(ls -l /usr/share/GeoIP)
 
 WORKDIR /usr/local/openresty
 
