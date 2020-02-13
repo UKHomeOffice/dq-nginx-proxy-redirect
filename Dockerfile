@@ -5,9 +5,11 @@ WORKDIR /root
 RUN mkdir -p /usr/share/GeoIP
 ADD ./GeoLite2-City.mmdb /usr/share/GeoIP/
 ADD ./GeoLite2-Country.mmdb /usr/share/GeoIP/
+RUN echo $(ls -l /usr/share/GeoIP)
 
 ADD ./build.sh /root/
 RUN ./build.sh
+RUN echo $(ls -l /usr/share/GeoIP)
 
 RUN yum install -y openssl && \
     yum clean all && \
