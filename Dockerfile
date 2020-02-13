@@ -5,11 +5,9 @@ WORKDIR /root
 RUN mkdir -p /usr/share/GeoIP
 COPY ./GeoLite2-City.mmdb /usr/share/GeoIP/GeoLite2-City.mmdb
 COPY ./GeoLite2-Country.mmdb /usr/share/GeoIP/GeoLite2-Country.mmdb
-RUN echo $(ls -l /usr/share/GeoIP)
 
 ADD ./build.sh /root/
 RUN ./build.sh
-RUN echo $(ls -l /usr/share/GeoIP)
 
 RUN yum install -y openssl && \
     yum clean all && \
@@ -46,8 +44,6 @@ RUN useradd -u 1000 nginx && \
       /usr/local/openresty/naxsi/locations \
       /usr/local/openresty/nginx/{client_body,fastcgi,proxy,scgi,uwsgi}_temp && \
     chown -R nginx:nginx /usr/local/openresty/nginx/{conf,logs} /usr/share/GeoIP
-
-RUN echo $(ls -l /usr/share/GeoIP)
 
 WORKDIR /usr/local/openresty
 
