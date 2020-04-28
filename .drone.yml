@@ -35,4 +35,4 @@ pipeline:
       - b${DRONE_BUILD_NUMBER}
     when:
       event: push
-      branch: master
+      # branch: master
