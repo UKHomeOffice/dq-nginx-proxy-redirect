@@ -179,15 +179,6 @@ else
     exit 1
 fi
 
-start_test "Test response has gzip" "${STD_CMD} \
-           -e \"PROXY_SERVICE_HOST=http://${MOCKSERVER}\" \
-           -e \"PROXY_SERVICE_PORT=${MOCKSERVER_PORT}\" \
-           -e \"DNSMASK=TRUE\" \
-           -e \"ENABLE_UUID_PARAM=FALSE\" \
-           --link \"${MOCKSERVER}:${MOCKSERVER}\" "
-echo "Test gzip ok..."
-curl -s -I -X GET -k --compressed https://${DOCKER_HOST_NAME}:${PORT}/gzip | grep -q 'Content-Encoding: gzip'
-
 start_test "Start with SSL CIPHER set and PROTOCOL" "${STD_CMD} \
            -e \"PROXY_SERVICE_HOST=www.w3.org\" \
            -e \"PROXY_SERVICE_PORT=80\" \
