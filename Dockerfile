@@ -1,4 +1,4 @@
-FROM centos:centos7
+FROM centos:centos7.9.2009
 
 WORKDIR /root
 
