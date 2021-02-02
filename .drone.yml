@@ -1,8 +1,15 @@
 pipeline:
-  build_monitor_image:
+  build_image:
     image: ukhomeoffice/drone-docker
     repo: quay.io/ukhomeofficedigital/dq-nginx-proxy-redirect
-    secrets: [ docker_username, docker_password ]
+    secrets:
+      - [ docker_username, docker_password ]
+      - GEOIP_CITY_URL
+      - GEOIP_COUNTRY_URL
+    commands:
+      - apk add curl
+      - curl -fSL $${GEOIP_CITY_URL} | gzip -d > GeoLite2-City.mmdb
+      - curl -fSL $${GEOIP_COUNTRY_URL} | gzip -d > GeoLite2-Country.mmdb
     registry: quay.io
     dockerfile: Dockerfile
     force_tag: true
