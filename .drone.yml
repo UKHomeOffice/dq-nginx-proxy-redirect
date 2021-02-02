@@ -14,7 +14,7 @@ pipeline:
       event: push
 
   build_and_test_image:
-    image: quay.io/ukhomeofficedigital/centos-base:latest
+    image: quay.io/ukhomeofficedigital/centos-base:v0.5.14.1
     environment:
       - DOCKER_HOST=tcp://172.17.0.1:2375
     commands:

@@ -16,8 +16,6 @@ MAXMIND_PATH='/usr/share/GeoIP'
 
 # Install dependencies to build from source
 
-echo "%_netsharedpath /sys:/proc" >> /etc/rpm/macros.dist
-
 yum -y install \
     gcc-c++ \
     gcc \
