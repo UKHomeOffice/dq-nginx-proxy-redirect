@@ -13,6 +13,20 @@ pipeline:
     when:
       event: push
 
+  build_monitor_image:
+    image: ukhomeoffice/drone-docker
+    repo: quay.io/ukhomeofficedigital/dq-nginx-proxy-redirect
+    secrets: [ docker_username, docker_password ]
+    registry: quay.io
+    dockerfile: Dockerfile
+    force_tag: true
+    tags:
+      - latest
+      - ${DRONE_COMMIT_SHA}
+      - b${DRONE_BUILD_NUMBER}
+    when:
+      event: push
+
   # build_and_test_image:
   #   image: quay.io/ukhomeofficedigital/centos-base:latest
   #   environment:
