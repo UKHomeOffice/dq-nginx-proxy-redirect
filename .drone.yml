@@ -1,38 +1,14 @@
 pipeline:
-  get_geoip_databases:
-    image: docker
-    environment:
-      - DOCKER_HOST=tcp://172.17.0.1:2375
-    secrets:
-      - GEOIP_CITY_URL
-      - GEOIP_COUNTRY_URL
-    commands:
-      - apk add curl
-      - curl -fSL $${GEOIP_CITY_URL} | gzip -d > GeoLite2-City.mmdb
-      - curl -fSL $${GEOIP_COUNTRY_URL} | gzip -d > GeoLite2-Country.mmdb
-    when:
-      event: push
-
-  build_and_test_image:
-    image: quay.io/ukhomeofficedigital/centos-base:v0.5.13
-    environment:
-      - DOCKER_HOST=tcp://172.17.0.1:2375
-    commands:
-      - yum update -y
-      - yum install -y -q docker openssl wget
-      - ./ci-build.sh
-    when:
-      event: push
-
-  push_image_to_quay:
+  build_monitor_image:
     image: ukhomeoffice/drone-docker
     repo: quay.io/ukhomeofficedigital/dq-nginx-proxy-redirect
     secrets: [ docker_username, docker_password ]
     registry: quay.io
+    dockerfile: Dockerfile
     force_tag: true
     tags:
+      - latest
       - ${DRONE_COMMIT_SHA}
       - b${DRONE_BUILD_NUMBER}
     when:
       event: push
-      # branch: master

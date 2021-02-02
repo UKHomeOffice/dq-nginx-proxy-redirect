@@ -1,4 +1,4 @@
-FROM quay.io/ukhomeofficedigital/centos-base:latest
+FROM centos:centos7
 
 WORKDIR /root
 
