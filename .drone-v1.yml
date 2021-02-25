@@ -1,7 +1,8 @@
 ---
 kind: pipeline
 name: default
-type: kubernetes
+type: kubernetes\
+
 platform:
   os: linux
   arch: amd64
@@ -9,7 +10,7 @@ platform:
 steps:
 - name: get_geoip_databases
   pull: if-not-exists
-  image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
+  image: plugins/docker
   commands:
   - apk add curl
   - curl -fSL $${GEOIP_CITY_URL} | gzip -d > GeoLite2-City.mmdb
@@ -24,7 +25,7 @@ steps:
 
 - name: build_image
   pull: if-not-exists
-  image: ukhomeoffice/drone-docker
+  image: plugins/docker
   settings:
     dockerfile: Dockerfile
     force_tag: true
