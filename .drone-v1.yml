@@ -1,0 +1,48 @@
+---
+kind: pipeline
+name: default
+type: kubernetes
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: get_geoip_databases
+  pull: if-not-exists
+  image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
+  commands:
+  - apk add curl
+  - curl -fSL $${GEOIP_CITY_URL} | gzip -d > GeoLite2-City.mmdb
+  - curl -fSL $${GEOIP_COUNTRY_URL} | gzip -d > GeoLite2-Country.mmdb
+    GEOIP_CITY_URL:
+      from_secret: GEOIP_CITY_URL
+    GEOIP_COUNTRY_URL:
+      from_secret: GEOIP_COUNTRY_URL
+  when:
+    event:
+    - push
+
+- name: build_image
+  pull: if-not-exists
+  image: ukhomeoffice/drone-docker
+  settings:
+    dockerfile: Dockerfile
+    force_tag: true
+    registry: quay.io
+    repo: quay.io/ukhomeofficedigital/dq-nginx-proxy-redirect
+    tags:
+    - latest
+    - ${DRONE_COMMIT_SHA}
+    - b${DRONE_BUILD_NUMBER}
+  environment:
+    DOCKER_PASSWORD:
+      from_secret: docker_password
+    DOCKER_USERNAME:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+services:
+  - name: docker
+    image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
