@@ -1,7 +1,7 @@
 ---
 kind: pipeline
 name: default
-type: kubernetes\
+type: kubernetes
 
 platform:
   os: linux
@@ -15,6 +15,7 @@ steps:
   - apk add curl
   - curl -fSL $${GEOIP_CITY_URL} | gzip -d > GeoLite2-City.mmdb
   - curl -fSL $${GEOIP_COUNTRY_URL} | gzip -d > GeoLite2-Country.mmdb
+  environment:
     GEOIP_CITY_URL:
       from_secret: GEOIP_CITY_URL
     GEOIP_COUNTRY_URL:
