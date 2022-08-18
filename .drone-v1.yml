@@ -49,7 +49,7 @@ steps:
   pull: if-not-exists
   image: quay.io/ukhomeofficedigital/trivyscanner:master
   commands:
-  - trivy image --ignore-unfixed --exit-code 0 --no-progress dq-nginx-proxy-redirect:$${DRONE_COMMIT_SHA}
+  - trivy image --ignore-unfixed --exit-code 0 --no-progress quay.io/ukhomeofficedigital/dq-nginx-proxy-redirect:$${DRONE_COMMIT_SHA}
   environment:
     DOCKER_PASSWORD:
       from_secret: docker_password
