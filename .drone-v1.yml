@@ -33,9 +33,8 @@ steps:
     registry: quay.io
     repo: quay.io/ukhomeofficedigital/dq-nginx-proxy-redirect
     tags:
-    - latest
     - ${DRONE_COMMIT_SHA}
-    - b${DRONE_BUILD_NUMBER}
+    - dev-${DRONE_BUILD_NUMBER}
   environment:
     DOCKER_PASSWORD:
       from_secret: docker_password
@@ -61,6 +60,30 @@ steps:
       - master
     event:
     - push
+
+- name: build_image
+  pull: if-not-exists
+  image: plugins/docker
+  settings:
+    dockerfile: Dockerfile
+    force_tag: true
+    registry: quay.io
+    repo: quay.io/ukhomeofficedigital/dq-nginx-proxy-redirect
+    tags:
+    - latest
+    - b${DRONE_BUILD_NUMBER}
+  environment:
+    DOCKER_PASSWORD:
+      from_secret: docker_password
+    DOCKER_USERNAME:
+      from_secret: docker_username
+  when:
+    branch:
+    - master
+    event:
+    - promote
+    target:
+    - production
 
 services:
   - name: docker
