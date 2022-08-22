@@ -11,8 +11,7 @@ RUN ./build.sh
 
 RUN yum install -y openssl && \
     yum clean all && \
-    mkdir -p /etc/keys && \
-    openssl req -x509 -newkey rsa:2048 -keyout /etc/keys/key -out /etc/keys/crt -days 360 -nodes -subj '/CN=test'
+    mkdir -p /etc/keys
 
 # This takes a while so best to do it during build
 RUN openssl dhparam -out /usr/local/openresty/nginx/conf/dhparam.pem 2048
