@@ -61,7 +61,7 @@ steps:
     event:
     - push
 
-- name: build_image
+- name: build_master
   pull: if-not-exists
   image: plugins/docker
   settings:
