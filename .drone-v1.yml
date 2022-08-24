@@ -60,7 +60,7 @@ steps:
   pull: if-not-exists
   image: quay.io/ukhomeofficedigital/trivyscanner:master
   commands:
-    - docker tag quay.io/ukhomeofficedigital/dq-nginx-proxy-redirect:$${DRONE_COMMIT_SHA} quay.io/ukhomeofficedigital/dq-nginx-proxy-redirect:latest
+  - docker tag quay.io/ukhomeofficedigital/dq-nginx-proxy-redirect:$${DRONE_COMMIT_SHA} quay.io/ukhomeofficedigital/dq-nginx-proxy-redirect:latest
   - docker tag quay.io/ukhomeofficedigital/dq-nginx-proxy-redirect:$${DRONE_COMMIT_SHA} quay.io/ukhomeofficedigital/dq-nginx-proxy-redirect:b${DRONE_BUILD_NUMBER}
   when:
     # branch:
