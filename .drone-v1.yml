@@ -8,25 +8,32 @@ platform:
   arch: amd64
 
 steps:
-- name: get_geoip_databases
+# - name: get_geoip_databases
+#   pull: if-not-exists
+#   image: plugins/docker
+#   commands:
+#   - apk add curl
+#   - curl -fSL $${GEOIP_CITY_URL} | gzip -d > GeoLite2-City.mmdb
+#   - curl -fSL $${GEOIP_COUNTRY_URL} | gzip -d > GeoLite2-Country.mmdb
+#   environment:
+#     GEOIP_CITY_URL:
+#       from_secret: GEOIP_CITY_URL
+#     GEOIP_COUNTRY_URL:
+#       from_secret: GEOIP_COUNTRY_URL
+#   when:
+#     event:
+#     - push
+#     - promote
+#     target:
+#     - production
+
+- name: build_image
   pull: if-not-exists
   image: plugins/docker
   commands:
   - apk add curl
   - curl -fSL $${GEOIP_CITY_URL} | gzip -d > GeoLite2-City.mmdb
   - curl -fSL $${GEOIP_COUNTRY_URL} | gzip -d > GeoLite2-Country.mmdb
-  environment:
-    GEOIP_CITY_URL:
-      from_secret: GEOIP_CITY_URL
-    GEOIP_COUNTRY_URL:
-      from_secret: GEOIP_COUNTRY_URL
-  when:
-    event:
-    - push
-
-- name: build_image
-  pull: if-not-exists
-  image: plugins/docker
   settings:
     dockerfile: Dockerfile
     force_tag: true
