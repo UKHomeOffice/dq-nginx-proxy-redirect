@@ -49,11 +49,6 @@ steps:
   image: quay.io/ukhomeofficedigital/trivyscanner:master
   commands:
   - trivy image --ignore-unfixed --exit-code 0 --no-progress quay.io/ukhomeofficedigital/dq-nginx-proxy-redirect:$${DRONE_COMMIT_SHA}
-  environment:
-    DOCKER_PASSWORD:
-      from_secret: docker_password
-    DOCKER_USERNAME:
-      from_secret: docker_username
   when:
     branch:
       exclude:
@@ -61,29 +56,19 @@ steps:
     event:
     - push
 
-- name: build_master
+- name: tag_master_code_image
   pull: if-not-exists
-  image: plugins/docker
-  settings:
-    dockerfile: Dockerfile
-    force_tag: true
-    registry: quay.io
-    repo: quay.io/ukhomeofficedigital/dq-nginx-proxy-redirect
-    tags:
-    - latest
-    - b${DRONE_BUILD_NUMBER}
-  environment:
-    DOCKER_PASSWORD:
-      from_secret: docker_password
-    DOCKER_USERNAME:
-      from_secret: docker_username
+  image: quay.io/ukhomeofficedigital/trivyscanner:master
+  commands:
+    - docker tag quay.io/ukhomeofficedigital/dq-nginx-proxy-redirect:$${DRONE_COMMIT_SHA} quay.io/ukhomeofficedigital/dq-nginx-proxy-redirect:latest
+  - docker tag quay.io/ukhomeofficedigital/dq-nginx-proxy-redirect:$${DRONE_COMMIT_SHA} quay.io/ukhomeofficedigital/dq-nginx-proxy-redirect:b${DRONE_BUILD_NUMBER}
   when:
-    branch:
-    - master
+    # branch:
+    # - master
     event:
     - promote
     target:
-    - production
+    - production  
 
 services:
   - name: docker
