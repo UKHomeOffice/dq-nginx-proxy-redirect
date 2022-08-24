@@ -74,8 +74,8 @@ steps:
     DOCKER_USERNAME:
       from_secret: docker_username
   when:
-    # branch:
-    # - master
+    branch:
+    - master
     event:
     - promote
     target:
