@@ -25,6 +25,7 @@ RUN mkdir -p /usr/local/openresty/nginx/conf/locations /usr/local/openresty/ngin
 ADD ./lua/* /usr/local/openresty/nginx/lua/
 RUN md5sum /usr/local/openresty/nginx/conf/nginx.conf | cut -d' ' -f 1 > /container_default_ngx
 ADD ./defaults.sh /
+ADD ./self_sign_cert.sh /
 ADD ./go.sh /
 ADD ./enable_location.sh /
 ADD ./location_template.conf /
