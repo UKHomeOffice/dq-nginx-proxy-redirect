@@ -60,8 +60,14 @@ steps:
   pull: if-not-exists
   image: quay.io/ukhomeofficedigital/trivyscanner:master
   commands:
+  - docker login -u=$${DOCKER_USERNAME} -p=$${DOCKER_PASSWORD} quay.io/ukhomeofficedigital
   - docker tag quay.io/ukhomeofficedigital/dq-nginx-proxy-redirect:$${DRONE_COMMIT_SHA} quay.io/ukhomeofficedigital/dq-nginx-proxy-redirect:latest
   - docker tag quay.io/ukhomeofficedigital/dq-nginx-proxy-redirect:$${DRONE_COMMIT_SHA} quay.io/ukhomeofficedigital/dq-nginx-proxy-redirect:b${DRONE_BUILD_NUMBER}
+  environment:
+    DOCKER_PASSWORD:
+      from_secret: docker_password
+    DOCKER_USERNAME:
+      from_secret: docker_username
   when:
     # branch:
     # - master
