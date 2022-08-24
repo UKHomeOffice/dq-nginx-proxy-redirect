@@ -11,7 +11,8 @@ RUN ./build.sh
 
 RUN yum install -y openssl && \
     yum clean all && \
-    mkdir -p /etc/keys
+    mkdir -p /etc/keys && \
+    chown 1000 /etc/keys
 
 # This takes a while so best to do it during build
 RUN openssl dhparam -out /usr/local/openresty/nginx/conf/dhparam.pem 2048
