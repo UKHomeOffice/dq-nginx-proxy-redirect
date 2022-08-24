@@ -23,9 +23,6 @@ steps:
   when:
     event:
     - push
-    - promote
-    target:
-    - production
 
 - name: build_image
   pull: if-not-exists
