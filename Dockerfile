@@ -20,7 +20,7 @@ RUN openssl dhparam -out /usr/local/openresty/nginx/conf/dhparam.pem 2048
 RUN yum install -y bind-utils dnsmasq && \
     yum clean all
     
-RUN yum upgrade -y bind-32:9.11.4-26.P2.el7_9.14.x86_64
+RUN yum upgrade -y bind-utils-9.11.4-26.P2.el7_9.14.x86_64
 
 ADD ./naxsi/location.rules /usr/local/openresty/naxsi/location.template
 ADD ./nginx*.conf /usr/local/openresty/nginx/conf/
