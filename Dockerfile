@@ -196,7 +196,7 @@ ADD ./readyness.sh /
 ADD ./helper.sh /
 ADD ./refresh_geoip.sh /
 
-RUN useradd -u 1000 nginx && \
+RUN adduser -u 1000 nginx && \
     install -o nginx -g nginx -d \
       /usr/local/openresty/naxsi/locations \
       /usr/local/openresty/nginx/{client_body,fastcgi,proxy,scgi,uwsgi}_temp && \
