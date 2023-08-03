@@ -177,7 +177,7 @@ RUN apk add --update-cache openssl && \
 # This takes a while so best to do it during build
 RUN openssl dhparam -out /usr/local/openresty/nginx/conf/dhparam.pem 2048
 
-RUN apk add --update-cache bind-tools dnsmasq
+RUN apk add --update-cache bind-tools dnsmasq bash
 
 ADD ./naxsi/location.rules /usr/local/openresty/naxsi/location.template
 ADD ./nginx*.conf /usr/local/openresty/nginx/conf/
