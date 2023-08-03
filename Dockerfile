@@ -197,6 +197,7 @@ ADD ./helper.sh /
 ADD ./refresh_geoip.sh /
 
 RUN addgroup -S nginx && adduser -u 1000 nginx --disabled-password --ingroup nginx && \
+    mkdir -p /usr/local/openresty/nginx/{conf,logs} && \
     install -o nginx -g nginx -d \
       /usr/local/openresty/naxsi/locations \
       /usr/local/openresty/nginx/{client_body,fastcgi,proxy,scgi,uwsgi}_temp && \
