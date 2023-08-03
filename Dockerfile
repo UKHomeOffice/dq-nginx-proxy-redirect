@@ -1,3 +1,5 @@
+FROM alpine:3.18
+
 WORKDIR /root
 
 RUN mkdir -p /usr/share/GeoIP
@@ -10,7 +12,6 @@ COPY ./GeoLite2-Country.mmdb /usr/share/GeoIP/GeoLite2-Country.mmdb
 ARG RESTY_IMAGE_BASE="alpine"
 ARG RESTY_IMAGE_TAG="3.18"
 
-FROM alpine:3.18
 
 LABEL maintainer="Evan Wies <evan@neomantra.net>"
 
