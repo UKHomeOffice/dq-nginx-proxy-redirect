@@ -1,4 +1,4 @@
-FROM centos:centos8
+FROM alpine:3.18
 
 WORKDIR /root
 
