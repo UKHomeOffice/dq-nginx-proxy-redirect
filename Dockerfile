@@ -1,10 +1,14 @@
-# Dockerfile - alpine
-# https://github.com/openresty/docker-openresty
-
 ARG RESTY_IMAGE_BASE="alpine"
 ARG RESTY_IMAGE_TAG="3.18"
 
 FROM ${RESTY_IMAGE_BASE}:${RESTY_IMAGE_TAG}
+
+WORKDIR /root
+
+RUN mkdir -p /usr/share/GeoIP
+COPY ./GeoLite2-City.mmdb /usr/share/GeoIP/GeoLite2-City.mmdb
+COPY ./GeoLite2-Country.mmdb /usr/share/GeoIP/GeoLite2-Country.mmdb
+
 
 LABEL maintainer="DQDevops"
 
@@ -158,11 +162,19 @@ RUN apk add --no-cache --virtual .build-deps \
     && apk del .build-deps \
     && mkdir -p /var/run/openresty \
     && ln -sf /dev/stdout /usr/local/openresty/nginx/logs/access.log \
-    && ln -sf /dev/stderr /usr/local/openresty/nginx/logs/error.log \
-    && apk upgrade libssl3 libcrypto3
+    && ln -sf /dev/stderr /usr/local/openresty/nginx/logs/error.log
 
 # Add additional binaries into PATH for convenience
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
+
+RUN apk add --update-cache openssl && \
+    mkdir -p /etc/keys && \
+    chown 1000 /etc/keys
+
+# This takes a while so best to do it during build
+RUN openssl dhparam -out /usr/local/openresty/nginx/conf/dhparam.pem 2048
+
+RUN apk add --update-cache bind-tools dnsmasq bash
 
 ADD ./naxsi/location.rules /usr/local/openresty/naxsi/location.template
 ADD ./nginx*.conf /usr/local/openresty/nginx/conf/
@@ -181,6 +193,13 @@ ADD ./readyness.sh /
 ADD ./helper.sh /
 ADD ./refresh_geoip.sh /
 
+RUN addgroup -S nginx && adduser -u 1000 nginx --disabled-password --ingroup nginx && \
+    mkdir -p /usr/local/openresty/nginx/{conf,logs} && \
+    install -o nginx -g nginx -d \
+      /usr/local/openresty/naxsi/locations \
+      /usr/local/openresty/nginx/{client_body,fastcgi,proxy,scgi,uwsgi}_temp && \
+    chown -R nginx:nginx /usr/local/openresty/nginx/{conf,logs} /usr/share/GeoIP
+
 WORKDIR /usr/local/openresty
 
 EXPOSE 10080 10443
@@ -188,9 +207,3 @@ EXPOSE 10080 10443
 USER 1000
 
 ENTRYPOINT [ "/go.sh" ]
-
-# CMD ["/usr/local/openresty/bin/openresty", "-g", "daemon off;"]
-
-# Use SIGQUIT instead of default SIGTERM to cleanly drain requests
-# See https://github.com/openresty/docker-openresty/blob/master/README.md#tips--pitfalls
-STOPSIGNAL SIGQUIT
