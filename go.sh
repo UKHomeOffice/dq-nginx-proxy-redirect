@@ -8,7 +8,6 @@ export LOG_UUID=FALSE
 
 . /self_sign_cert.sh
 
-chmod -R 664 /usr/local/openresty
 
 cat > ${NGIX_CONF_DIR}/server_certs.conf <<-EOF_CERT_CONF
     ssl_certificate     ${SERVER_CERT};
