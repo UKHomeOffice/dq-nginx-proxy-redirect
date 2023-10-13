@@ -205,6 +205,6 @@ WORKDIR /usr/local/openresty
 
 EXPOSE 10080 10443
 
-USER 1000
+USER root
 
 ENTRYPOINT [ "/go.sh" ]
