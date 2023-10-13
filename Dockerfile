@@ -199,12 +199,13 @@ RUN addgroup -S nginx && adduser -u 1000 nginx --disabled-password --ingroup ngi
     install -o nginx -g nginx -d \
       /usr/local/openresty/naxsi/locations \
       /usr/local/openresty/nginx/{client_body,fastcgi,proxy,scgi,uwsgi}_temp && \
-    chown -R nginx:nginx /usr/local/openresty/nginx/{conf,logs} /usr/share/GeoIP
+    chown -R nginx:nginx /usr/local/openresty/nginx/{conf,logs} /usr/share/GeoIP \
+    chmod -R 764 /usr/local/openresty/nginx/
 
 WORKDIR /usr/local/openresty
 
 EXPOSE 10080 10443
 
-USER root
+USER 1000
 
 ENTRYPOINT [ "/go.sh" ]
