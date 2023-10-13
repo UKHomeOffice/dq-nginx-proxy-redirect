@@ -10,7 +10,7 @@ COPY ./GeoLite2-City.mmdb /usr/share/GeoIP/GeoLite2-City.mmdb
 COPY ./GeoLite2-Country.mmdb /usr/share/GeoIP/GeoLite2-Country.mmdb
 
 
-LABEL maintainer="DQDevops"
+LABEL maintainer="DQ-Devops"
 
 # Docker Build Arguments
 ARG RESTY_IMAGE_BASE="alpine"
