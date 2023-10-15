@@ -202,7 +202,8 @@ RUN addgroup -S nginx && adduser -u 1000 nginx --disabled-password --ingroup ngi
     chown -R nginx:nginx /usr/local/openresty/nginx/{conf,logs} /usr/share/GeoIP && \
     touch /usr/local/openresty/nginx/conf/server_certs.conf && chmod -R 0777 /usr/local/openresty/nginx/conf/server_certs.conf && \
     touch /usr/local/openresty/nginx/conf/nginx_listen.conf && chmod -R 0777 /usr/local/openresty/nginx/conf/nginx_listen.conf && \
-    touch /usr/local/openresty/nginx/conf/nginx_sysdig_server.conf && chmod -R 0777 /usr/local/openresty/nginx/conf/nginx_sysdig_server.conf
+    touch /usr/local/openresty/nginx/conf/nginx_sysdig_server.conf && chmod -R 0777 /usr/local/openresty/nginx/conf/nginx_sysdig_server.conf && \
+    touch /usr/local/openresty/nginx/conf/locations/1.conf && chmod -R 0777 /usr/local/openresty/nginx/conf/locations/
     
 WORKDIR /usr/local/openresty
 
