@@ -5,7 +5,7 @@ FROM ${RESTY_IMAGE_BASE}:${RESTY_IMAGE_TAG}
 
 WORKDIR /root
 
-RUN mkdir -p /usr/share/GeoIP
+RUN mkdir -p /usr/share/GeoIP && git clone https://github.com/leev/ngx_http_geoip2_module.git
 COPY ./GeoLite2-City.mmdb /usr/share/GeoIP/GeoLite2-City.mmdb
 COPY ./GeoLite2-Country.mmdb /usr/share/GeoIP/GeoLite2-Country.mmdb
 
@@ -151,7 +151,7 @@ RUN apk add --no-cache --virtual .build-deps \
     && tar xzf openresty-${RESTY_VERSION}.tar.gz \
     && cd /tmp/openresty-${RESTY_VERSION} \
     && if [ -n "${RESTY_EVAL_POST_DOWNLOAD_PRE_CONFIGURE}" ]; then eval $(echo ${RESTY_EVAL_POST_DOWNLOAD_PRE_CONFIGURE}); fi \
-    && eval ./configure -j${RESTY_J} ${_RESTY_CONFIG_DEPS} ${RESTY_CONFIG_OPTIONS} ${RESTY_CONFIG_OPTIONS_MORE} ${RESTY_LUAJIT_OPTIONS} ${RESTY_PCRE_OPTIONS} \
+    && eval ./configure -j${RESTY_J} ${_RESTY_CONFIG_DEPS} ${RESTY_CONFIG_OPTIONS} ${RESTY_CONFIG_OPTIONS_MORE} ${RESTY_LUAJIT_OPTIONS} ${RESTY_PCRE_OPTIONS} --add-module=/root/ngx_http_geoip2_module \
     && make -j${RESTY_J} \
     && make -j${RESTY_J} install \
     && cd /tmp \
@@ -175,8 +175,7 @@ RUN apk add --update-cache openssl && \
 # This takes a while so best to do it during build
 RUN openssl dhparam -out /usr/local/openresty/nginx/conf/dhparam.pem 2048
 
-RUN apk add --update-cache bind-tools dnsmasq bash nginx-mod-http-geoip && \
-    cp /usr/lib/nginx/modules/ngx_stream_geoip_module.so /usr/local/openresty/nginx/modules/ngx_http_geoip2_module.so
+RUN apk add --update-cache bind-tools dnsmasq bash
 
 ADD ./naxsi/location.rules /usr/local/openresty/naxsi/location.template
 ADD ./nginx*.conf /usr/local/openresty/nginx/conf/
