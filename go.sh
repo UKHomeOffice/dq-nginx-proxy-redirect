@@ -8,7 +8,7 @@ export LOG_UUID=FALSE
 
 . /self_sign_cert.sh
 
-
+touch ${NGIX_CONF_DIR}
 cat > ${NGIX_CONF_DIR}/server_certs.conf <<-EOF_CERT_CONF
     ssl_certificate     ${SERVER_CERT};
     ssl_certificate_key ${SERVER_KEY};
@@ -30,7 +30,7 @@ fi
 
 INTERNAL_LISTEN_PORT="${INTERNAL_LISTEN_PORT:-10418}"
 NGIX_LISTEN_CONF="${NGIX_CONF_DIR}/nginx_listen.conf"
-
+touch ${NGIX_LISTEN_CONF}
 cat > ${NGIX_LISTEN_CONF} <<-EOF-LISTEN
 		set \$http_listen_port '${HTTP_LISTEN_PORT}';
 		set \$https_listen_port '${HTTPS_LISTEN_PORT}';
