@@ -203,12 +203,12 @@ RUN addgroup -S nginx && adduser -u 1000 nginx --disabled-password --ingroup ngi
     touch /usr/local/openresty/nginx/conf/server_certs.conf && chmod -R 0777 /usr/local/openresty/nginx/conf/server_certs.conf && \
     touch /usr/local/openresty/nginx/conf/nginx_listen.conf && chmod -R 0777 /usr/local/openresty/nginx/conf/nginx_listen.conf && \
     touch /usr/local/openresty/nginx/conf/nginx_sysdig_server.conf && chmod -R 0777 /usr/local/openresty/nginx/conf/nginx_sysdig_server.conf && \
-    touch /usr/local/openresty/nginx/conf/locations/1.conf && chmod -R 0777 /usr/local/openresty/nginx/conf/locations/
+    touch /usr/local/openresty/nginx/conf/locations/1.conf && chmod -R 0777 /usr/local/openresty/nginx/conf/
     
 WORKDIR /usr/local/openresty
 
 EXPOSE 10080 10443
 
-USER 1000
+USER nginx
 
 ENTRYPOINT [ "/go.sh" ]
