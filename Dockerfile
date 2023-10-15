@@ -102,7 +102,6 @@ RUN apk add --no-cache --virtual .build-deps \
         readline-dev \
         zlib-dev \
         ${RESTY_ADD_PACKAGE_BUILDDEPS} \
-        nginx-mod-http-headers-more nginx-mod-http-geoip nginx-mod-stream nginx-mod-stream-geoip \
     && apk add --no-cache \
         gd \
         geoip \
@@ -176,7 +175,8 @@ RUN apk add --update-cache openssl && \
 # This takes a while so best to do it during build
 RUN openssl dhparam -out /usr/local/openresty/nginx/conf/dhparam.pem 2048
 
-RUN apk add --update-cache bind-tools dnsmasq bash
+RUN apk add --update-cache bind-tools dnsmasq bash nginx-mod-http-geoip && \
+    cp /usr/lib/nginx/modules/ngx_stream_geoip_module.so /usr/local/openresty/nginx/modules/ngx_http_geoip2_module.so
 
 ADD ./naxsi/location.rules /usr/local/openresty/naxsi/location.template
 ADD ./nginx*.conf /usr/local/openresty/nginx/conf/
