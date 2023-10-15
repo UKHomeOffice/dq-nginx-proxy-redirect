@@ -102,6 +102,7 @@ RUN apk add --no-cache --virtual .build-deps \
         readline-dev \
         zlib-dev \
         ${RESTY_ADD_PACKAGE_BUILDDEPS} \
+        nginx-mod-http-headers-more nginx-mod-http-geoip nginx-mod-stream nginx-mod-stream-geoip \
     && apk add --no-cache \
         gd \
         geoip \
