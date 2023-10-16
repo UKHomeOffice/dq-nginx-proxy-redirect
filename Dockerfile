@@ -5,7 +5,7 @@ FROM ${RESTY_IMAGE_BASE}:${RESTY_IMAGE_TAG}
 
 WORKDIR /root
 
-RUN mkdir -p /usr/share/GeoIP && git clone https://github.com/leev/ngx_http_geoip2_module.git
+RUN mkdir -p /usr/share/GeoIP
 COPY ./GeoLite2-City.mmdb /usr/share/GeoIP/GeoLite2-City.mmdb
 COPY ./GeoLite2-Country.mmdb /usr/share/GeoIP/GeoLite2-Country.mmdb
 
@@ -94,7 +94,10 @@ RUN apk add --no-cache --virtual .build-deps \
         coreutils \
         curl \
         gd-dev \
+        git \
         geoip-dev \
+        libmaxminddb \
+        libmaxminddb-dev \
         libxslt-dev \
         linux-headers \
         make \
@@ -111,6 +114,7 @@ RUN apk add --no-cache --virtual .build-deps \
         nghttp2=1.57.0-r0 \
         ${RESTY_ADD_PACKAGE_RUNDEPS} \
     && cd /tmp \
+    && git clone https://github.com/leev/ngx_http_geoip2_module.git
     && if [ -n "${RESTY_EVAL_PRE_CONFIGURE}" ]; then eval $(echo ${RESTY_EVAL_PRE_CONFIGURE}); fi \
     && cd /tmp \
     && curl -fSL "${RESTY_OPENSSL_URL_BASE}/openssl-${RESTY_OPENSSL_VERSION}.tar.gz" -o openssl-${RESTY_OPENSSL_VERSION}.tar.gz \
@@ -151,7 +155,7 @@ RUN apk add --no-cache --virtual .build-deps \
     && tar xzf openresty-${RESTY_VERSION}.tar.gz \
     && cd /tmp/openresty-${RESTY_VERSION} \
     && if [ -n "${RESTY_EVAL_POST_DOWNLOAD_PRE_CONFIGURE}" ]; then eval $(echo ${RESTY_EVAL_POST_DOWNLOAD_PRE_CONFIGURE}); fi \
-    && eval ./configure -j${RESTY_J} ${_RESTY_CONFIG_DEPS} ${RESTY_CONFIG_OPTIONS} ${RESTY_CONFIG_OPTIONS_MORE} ${RESTY_LUAJIT_OPTIONS} ${RESTY_PCRE_OPTIONS} --add-module=/root/ngx_http_geoip2_module \
+    && eval ./configure -j${RESTY_J} ${_RESTY_CONFIG_DEPS} ${RESTY_CONFIG_OPTIONS} ${RESTY_CONFIG_OPTIONS_MORE} ${RESTY_LUAJIT_OPTIONS} ${RESTY_PCRE_OPTIONS} --add-module=/tmp/ngx_http_geoip2_module \
     && make -j${RESTY_J} \
     && make -j${RESTY_J} install \
     && cd /tmp \
