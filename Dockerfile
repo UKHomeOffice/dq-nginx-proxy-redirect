@@ -96,8 +96,6 @@ RUN apk add --no-cache --virtual .build-deps \
         gd-dev \
         git \
         geoip-dev \
-        libmaxminddb \
-        libmaxminddb-dev \
         libxslt-dev \
         linux-headers \
         make \
@@ -172,10 +170,10 @@ RUN apk add --no-cache --virtual .build-deps \
 # Add additional binaries into PATH for convenience
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
 
-RUN apk add --update-cache openssl && \
+RUN apk add --update-cache openssl libmaxminddb && \
     mkdir -p /etc/keys && \
     chown 1000 /etc/keys && \
-    cp /usr/lib/libmaxminddb.so* /usr/local/openresty/nginx/modules/
+    cp /usr/lib/libmaxminddb.* /usr/local/openresty/nginx/modules/
 
 # This takes a while so best to do it during build
 RUN openssl dhparam -out /usr/local/openresty/nginx/conf/dhparam.pem 2048
