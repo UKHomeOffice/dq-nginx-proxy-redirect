@@ -114,7 +114,7 @@ RUN apk add --no-cache --virtual .build-deps \
         nghttp2=1.57.0-r0 \
         ${RESTY_ADD_PACKAGE_RUNDEPS} \
     && cd /tmp \
-    && git clone https://github.com/leev/ngx_http_geoip2_module.git
+    && git clone https://github.com/leev/ngx_http_geoip2_module.git \
     && if [ -n "${RESTY_EVAL_PRE_CONFIGURE}" ]; then eval $(echo ${RESTY_EVAL_PRE_CONFIGURE}); fi \
     && cd /tmp \
     && curl -fSL "${RESTY_OPENSSL_URL_BASE}/openssl-${RESTY_OPENSSL_VERSION}.tar.gz" -o openssl-${RESTY_OPENSSL_VERSION}.tar.gz \
