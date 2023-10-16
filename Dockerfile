@@ -115,7 +115,6 @@ RUN apk add --no-cache --virtual .build-deps \
         ${RESTY_ADD_PACKAGE_RUNDEPS} \
     && cd /tmp \
     && git clone https://github.com/leev/ngx_http_geoip2_module.git \
-    && cp /usr/lib/libmaxminddb.so* /usr/local/openresty/nginx/modules/ \
     && if [ -n "${RESTY_EVAL_PRE_CONFIGURE}" ]; then eval $(echo ${RESTY_EVAL_PRE_CONFIGURE}); fi \
     && cd /tmp \
     && curl -fSL "${RESTY_OPENSSL_URL_BASE}/openssl-${RESTY_OPENSSL_VERSION}.tar.gz" -o openssl-${RESTY_OPENSSL_VERSION}.tar.gz \
@@ -175,7 +174,8 @@ ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/
 
 RUN apk add --update-cache openssl && \
     mkdir -p /etc/keys && \
-    chown 1000 /etc/keys
+    chown 1000 /etc/keys && \
+    cp /usr/lib/libmaxminddb.so* /usr/local/openresty/nginx/modules/
 
 # This takes a while so best to do it during build
 RUN openssl dhparam -out /usr/local/openresty/nginx/conf/dhparam.pem 2048
