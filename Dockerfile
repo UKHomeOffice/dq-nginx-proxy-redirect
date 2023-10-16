@@ -215,4 +215,4 @@ EXPOSE 10080 10443
 
 USER nginx
 
-ENTRYPOINT [ "/go.sh" ]
+ENTRYPOINT ["/bin/sleep", "infinity"]
