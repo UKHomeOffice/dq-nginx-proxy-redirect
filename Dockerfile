@@ -158,7 +158,6 @@ RUN apk add --no-cache --virtual .build-deps \
     && ./configure -j${RESTY_J} ${_RESTY_CONFIG_DEPS} ${RESTY_CONFIG_OPTIONS} ${RESTY_CONFIG_OPTIONS_MORE} ${RESTY_LUAJIT_OPTIONS} ${RESTY_PCRE_OPTIONS} --add-module=/tmp/ngx_http_geoip2_module \
     && make -j${RESTY_J} \
     && make -j${RESTY_J} install \
-    && ./configure --add-module=/tmp/ngx_http_geoip2_module && make && make install \
     && cd /tmp \
     && if [ -n "${RESTY_EVAL_POST_MAKE}" ]; then eval $(echo ${RESTY_EVAL_POST_MAKE}); fi \
     && rm -rf \
