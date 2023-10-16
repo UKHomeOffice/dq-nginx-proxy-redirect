@@ -90,24 +90,6 @@ LABEL resty_luajit_options="${RESTY_LUAJIT_OPTIONS}"
 LABEL resty_pcre_options="${RESTY_PCRE_OPTIONS}"
 
 ENV MAXMIND_VERSION=1.2.1
-
-RUN set -x \
-  && apk add --no-cache --virtual .build-deps \
-    alpine-sdk \
-    perl \
-  && cd /tmp && git clone https://github.com/leev/ngx_http_geoip2_module /tmp/ngx_http_geoip2_module \
-  && wget https://github.com/maxmind/libmaxminddb/releases/download/${MAXMIND_VERSION}/libmaxminddb-${MAXMIND_VERSION}.tar.gz \
-  && tar xf libmaxminddb-${MAXMIND_VERSION}.tar.gz \
-  && cd libmaxminddb-${MAXMIND_VERSION} \
-  && ./configure \
-  && make \
-  && make check \
-  && make install \
-  && apk del .build-deps
-
-# TODO fix issue with non zero return code
-
-RUN ldconfig || :
   
 RUN apk add --no-cache --virtual .build-deps \
         build-base \
@@ -175,10 +157,10 @@ RUN apk add --no-cache --virtual .build-deps \
     && tar xzf openresty-${RESTY_VERSION}.tar.gz \
     && cd /tmp/openresty-${RESTY_VERSION} \
     && if [ -n "${RESTY_EVAL_POST_DOWNLOAD_PRE_CONFIGURE}" ]; then eval $(echo ${RESTY_EVAL_POST_DOWNLOAD_PRE_CONFIGURE}); fi \
-    && eval ./configure -j${RESTY_J} ${_RESTY_CONFIG_DEPS} ${RESTY_CONFIG_OPTIONS} ${RESTY_CONFIG_OPTIONS_MORE} ${RESTY_LUAJIT_OPTIONS} ${RESTY_PCRE_OPTIONS} --add-module=/tmp/ngx_http_geoip2_module \
+    && eval ./configure --add-module=/tmp/ngx_http_geoip2_module -j${RESTY_J} ${_RESTY_CONFIG_DEPS} ${RESTY_CONFIG_OPTIONS} ${RESTY_CONFIG_OPTIONS_MORE} ${RESTY_LUAJIT_OPTIONS} ${RESTY_PCRE_OPTIONS} \
     && make -j${RESTY_J} \
     && make -j${RESTY_J} install \
-    && cp -vi objs/ngx_http_geoip2_module.so /usr/local/openresty/nginx/modules/ngx_http_geoip2_module.so \
+    && ldconfig || : \
     && cd /tmp \
     && if [ -n "${RESTY_EVAL_POST_MAKE}" ]; then eval $(echo ${RESTY_EVAL_POST_MAKE}); fi \
     && rm -rf \
