@@ -212,7 +212,11 @@ RUN addgroup -S nginx && adduser -u 1000 nginx --disabled-password --ingroup ngi
     touch /usr/local/openresty/nginx/conf/nginx_sysdig_server.conf && chmod -R 0777 /usr/local/openresty/nginx/conf/nginx_sysdig_server.conf && \
     touch /usr/local/openresty/nginx/conf/locations/1.conf && chmod -R 0777 /usr/local/openresty/nginx && chown -R nginx:nginx /usr/local/openresty/nginx && \
     cp /usr/lib/libmaxminddb.so* /usr/local/openresty/nginx/modules
-    
+
+RUN apk add --no-cache \
+        lua-socket \
+        lua-uuid
+        
 WORKDIR /usr/local/openresty
 
 EXPOSE 10080 10443
