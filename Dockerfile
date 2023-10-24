@@ -218,9 +218,7 @@ RUN apk add --no-cache \
         luarocks && \
         alias luarocks=luarocks-5.1 && \
         luarocks install uuid && \
-        luarocks install socket && \
-        cp /usr/local/share/lua/5.1/uuid.lua /usr/local/openresty/nginx/lua/uuid.lua && \
-        cp /usr/local/openresty/lualib/resty/core/socket.lua /usr/local/openresty/nginx/lua/socket.lua
+        luarocks install socket 
         
 WORKDIR /usr/local/openresty
 
