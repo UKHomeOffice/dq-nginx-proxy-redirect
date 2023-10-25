@@ -218,7 +218,8 @@ RUN apk add --no-cache \
         lua-dev \
         musl-dev \
         luarocks \
-        lua-uuid 
+        lua-uuid \
+        gcc
         
 RUN luarocks-5.1 install luasocket
         
