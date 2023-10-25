@@ -213,9 +213,14 @@ RUN addgroup -S nginx && adduser -u 1000 nginx --disabled-password --ingroup ngi
     touch /usr/local/openresty/nginx/conf/locations/1.conf && chmod -R 0777 /usr/local/openresty/nginx && chown -R nginx:nginx /usr/local/openresty/nginx && \
     cp /usr/lib/libmaxminddb.so* /usr/local/openresty/nginx/modules
 
+
 RUN apk add --no-cache \
-        lua-socket \
+        lua-dev \
+        musl-dev \
+        luarocks \
         lua-uuid 
+        
+RUN luarocks-5.1 install luasocket
         
 WORKDIR /usr/local/openresty
 
